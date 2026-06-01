@@ -21,5 +21,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 6. Copy toàn bộ các file/thư mục còn lại của dự án vào server
 COPY . .
 
-# 7. Lệnh cuối cùng để khởi động server FastAPI khi mọi thứ đã cài xong
-CMD ["uvicorn", "project_root.main:app", "--host", "0.0.0.0", "--port", "10000"]
+# ---------------------------------------------------------
+# BƯỚC MỚI THÊM: Di chuyển thẳng vào thư mục project_root
+WORKDIR /app/project_root
+# ---------------------------------------------------------
+
+# 7. Lệnh cuối cùng để khởi động server FastAPI
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "10000"]
