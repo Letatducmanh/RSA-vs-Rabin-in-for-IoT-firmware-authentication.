@@ -1,5 +1,5 @@
 # 1. Chọn hệ điều hành và phiên bản Python có sẵn
-FROM python:3.10-slim
+FROM python:3.13-slim
 
 # 2. Cài đặt các thư viện lõi của hệ thống (bắt buộc phải có để chạy gmpy2)
 RUN apt-get update && apt-get install -y \
