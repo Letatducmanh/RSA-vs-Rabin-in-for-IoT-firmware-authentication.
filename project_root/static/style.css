@@ -1,13 +1,16 @@
-/* Khởi tạo biến màu sắc chủ đạo (Crypto Theme) */
+/* Khởi tạo biến màu sắc chủ đạo (Light/Presentation Theme) */
 :root {
-    --bg-dark: #0a0e17;
-    --panel-bg: rgba(16, 24, 39, 0.7);
-    --border-color: #1f2937;
-    --text-main: #e5e7eb;
-    --text-muted: #9ca3af;
-    --rsa-color: #f59e0b;     /* Vàng cam cho RSA */
-    --rabin-color: #10b981;   /* Xanh ngọc cho Rabin (Chiến thắng) */
-    --cyber-glow: 0 0 10px rgba(16, 185, 129, 0.4);
+    --bg-main: #f3f4f6;          /* Nền tổng thể màu xám cực nhạt để làm nổi bật panel trắng */
+    --panel-bg: #ffffff;         /* Nền các khung chứa màu trắng tinh */
+    --border-color: #e5e7eb;     /* Viền xám nhạt */
+    --text-main: #111827;        /* Chữ màu đen/xám cực đậm */
+    --text-muted: #6b7280;       /* Chữ chú thích màu xám vừa */
+    
+    /* Làm sẫm màu nhấn để nổi bật trên nền trắng */
+    --rsa-color: #d97706;        /* Cam sẫm cho RSA */
+    --rabin-color: #059669;      /* Xanh ngọc sẫm cho Rabin */
+    --focus-ring: 0 0 0 3px rgba(5, 150, 105, 0.2); /* Viền focus mượt mà thay vì glow */
+    
     --font-sans: 'Inter', sans-serif;
     --font-mono: 'Fira Code', monospace;
 }
@@ -19,13 +22,11 @@
 }
 
 body {
-    background-color: var(--bg-dark);
+    background-color: var(--bg-main);
     color: var(--text-main);
     font-family: var(--font-sans);
     min-height: 100vh;
-    background-image: 
-        linear-gradient(rgba(10, 14, 23, 0.9), rgba(10, 14, 23, 0.9)),
-        url('https://www.transparenttextures.com/patterns/cubes.png'); /* Pattern nền mờ */
+    /* Loại bỏ pattern nền đen, thay bằng màu trơn cho sạch sẽ */
 }
 
 .dashboard-container {
@@ -48,7 +49,7 @@ body {
     color: var(--rabin-color);
     letter-spacing: 4px;
     margin-bottom: 10px;
-    opacity: 0.8;
+    font-weight: 600;
 }
 
 .cyber-header h1 {
@@ -61,7 +62,7 @@ body {
 .highlight-rsa { color: var(--rsa-color); }
 .highlight-rabin { 
     color: var(--rabin-color); 
-    text-shadow: var(--cyber-glow);
+    /* Bỏ text-shadow phát sáng trên nền trắng */
 }
 
 .cyber-header p {
@@ -74,9 +75,9 @@ body {
     background: var(--panel-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    backdrop-filter: blur(10px);
     padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    /* Thay đổi shadow: Bóng đổ nhẹ nhàng, chuyên nghiệp */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Control Panel */
@@ -96,13 +97,14 @@ body {
 .input-group label {
     font-family: var(--font-mono);
     font-size: 0.95rem;
-    color: var(--text-muted);
+    color: #111827; /* Màu đen/xám đậm */
+    font-weight: 600; /* In đậm một chút để rõ hơn trên máy chiếu */
 }
 
 .input-group input {
-    background: var(--bg-dark);
-    border: 1px solid var(--border-color);
-    color: var(--rabin-color);
+    background: #ffffff;
+    border: 1px solid #d1d5db; /* Viền xám nhạt */
+    color: #000000; /* Chữ màu đen thuần */
     font-family: var(--font-mono);
     font-size: 1.2rem;
     padding: 0.5rem 1rem;
@@ -110,32 +112,32 @@ body {
     width: 150px;
     text-align: center;
     outline: none;
+    transition: all 0.2s;
 }
-
 
 .input-group input:focus {
     border-color: var(--rabin-color);
-    box-shadow: var(--cyber-glow);
+    box-shadow: var(--focus-ring);
 }
 
 /* Cyber Button */
 .cyber-button {
     background: transparent;
-    border: 1px solid var(--rabin-color);
+    border: 2px solid var(--rabin-color);
     color: var(--rabin-color);
     font-family: var(--font-mono);
     font-size: 1rem;
     padding: 0.8rem 2rem;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 6px;
     transition: all 0.3s ease;
     font-weight: 600;
 }
 
 .cyber-button:hover {
     background: var(--rabin-color);
-    color: var(--bg-dark);
-    box-shadow: var(--cyber-glow);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2);
 }
 
 /* Charts Grid */
@@ -155,35 +157,33 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
-    border-bottom: 1px dashed var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.8rem;
 }
 
 .card-header h3 {
     font-size: 1.1rem;
-    font-weight: 500;
-    letter-spacing: 1px;
+    font-weight: 600;
+    color: var(--text-main);
 }
 
 .badge {
-    background: rgba(245, 158, 11, 0.1);
+    background: #fef3c7; /* Nền vàng cam cực nhạt */
     color: var(--rsa-color);
     padding: 0.3rem 0.8rem;
     border-radius: 20px;
     font-size: 0.8rem;
-    font-weight: 600;
-    border: 1px solid var(--rsa-color);
+    font-weight: 700;
 }
 
 .badge.success {
-    background: rgba(16, 185, 129, 0.1);
+    background: #d1fae5; /* Nền xanh ngọc cực nhạt */
     color: var(--rabin-color);
-    border-color: var(--rabin-color);
 }
 
 .canvas-container {
     position: relative;
-    height: 400px; /* Cố định chiều cao cho biểu đồ */
+    height: 400px; 
     width: 100%;
 }
 
@@ -191,7 +191,7 @@ body {
 .loading-overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(10, 14, 23, 0.85);
+    background: rgba(255, 255, 255, 0.9); /* Đổi sang nền trắng mờ */
     backdrop-filter: blur(5px);
     display: flex;
     flex-direction: column;
@@ -207,8 +207,8 @@ body {
 .spinner {
     width: 50px;
     height: 50px;
-    border: 3px solid var(--border-color);
-    border-top: 3px solid var(--rabin-color);
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--rabin-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 1rem;
@@ -216,7 +216,8 @@ body {
 
 .loading-text {
     font-family: var(--font-mono);
-    color: var(--rabin-color);
+    color: var(--text-main);
+    font-weight: 600;
     animation: pulse 1.5s infinite;
 }
 
@@ -230,21 +231,26 @@ body {
 }
 .cyber-table th, .cyber-table td {
     padding: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--border-color);
 }
 .cyber-table th {
-    color: var(--text-muted);
+    color: var(--text-main);
     font-family: var(--font-mono);
     text-transform: uppercase;
     font-size: 0.9rem;
-    background: rgba(0, 0, 0, 0.2);
+    background: #f9fafb; /* Nền header xám cực nhạt */
+    font-weight: 600;
+}
+
+.cyber-table tr:hover { 
+    background: #f3f4f6; 
 }
 
 /* Styling cho ô chọn Kích thước khóa (Dropdown) */
 .cyber-select {
-    background-color: var(--bg-dark);
+    background-color: #ffffff;
     border: 1px solid var(--border-color);
-    color: var(--rabin-color);
+    color: #000000; /* Chữ màu đen thuần */
     font-family: var(--font-mono);
     font-size: 1rem;
     padding: 0.5rem 1rem;
@@ -252,21 +258,19 @@ body {
     outline: none;
     cursor: pointer;
     width: auto;
+    transition: all 0.2s;
 }
 
 .cyber-select:focus {
     border-color: var(--rabin-color);
-    box-shadow: var(--cyber-glow);
+    box-shadow: var(--focus-ring);
 }
 
-/* Đổi màu nền của các lựa chọn bên trong khi bấm xổ xuống */
 .cyber-select option {
-    background-color: var(--bg-dark);
-    color: var(--rabin-color);
+    background-color: #ffffff;
+    color: #000000;
     font-family: var(--font-mono);
 }
-
-.cyber-table tr:hover { background: rgba(255, 255, 255, 0.02); }
 
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
