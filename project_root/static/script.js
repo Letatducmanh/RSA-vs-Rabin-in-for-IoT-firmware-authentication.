@@ -5,12 +5,18 @@ let verifyChartInstance = null;
 // Cấu hình màu sắc đồng bộ với CSS (Cyber Theme)
 const RSA_COLOR = '#f59e0b'; // Vàng cam
 const RABIN_COLOR = '#10b981'; // Xanh ngọc
-const GRID_COLOR = 'rgba(255, 255, 255, 0.1)';
-const TEXT_COLOR = '#9ca3af';
+const GRID_COLOR = 'rgba(17, 24, 39, 0.08)';
+const TEXT_COLOR = '#000000';
 
-// Hàm cấu hình mặc định cho Chart.js nền tối
+// Hàm cấu hình mặc định cho Chart.js chữ màu đen để dễ đọc trên nền trắng
 Chart.defaults.color = TEXT_COLOR;
 Chart.defaults.font.family = "'Fira Code', monospace";
+Chart.defaults.plugins.legend.labels.color = TEXT_COLOR;
+Chart.defaults.plugins.tooltip.titleColor = TEXT_COLOR;
+Chart.defaults.plugins.tooltip.bodyColor = TEXT_COLOR;
+Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+Chart.defaults.plugins.tooltip.borderColor = '#000000';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
 
 document.addEventListener('DOMContentLoaded', () => {
     const runBtn = document.getElementById('runBtn');
@@ -184,19 +190,65 @@ function renderSignChart(metrics, numPackets) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            color: '#000000', 
+            font: {
+                family: "'Inter', sans-serif",
+                weight: 'bold'
+            },
             plugins: {
-                tooltip: { mode: 'index', intersect: false },
-                legend: { position: 'top' }
+                tooltip: { 
+                    mode: 'index', 
+                    intersect: false,
+                    // THÊM: Chỉnh màu hộp thoại khi di chuột vào biểu đồ
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)', // Nền trắng mờ
+                    titleColor: '#000000',  // Chữ tiêu đề đen tuyền
+                    bodyColor: '#000000',   // Chữ nội dung đen tuyền
+                    borderColor: '#000000', // Viền hộp thoại màu đen cho nổi bật
+                    borderWidth: 1,
+                    bodyFont: {
+                        family: "'Fira Code', monospace",
+                        size: 14,
+                        weight: 'bold'
+                    }
+                },
+                legend: { 
+                    position: 'top',
+                    // THÊM: Chỉnh màu chữ cho phần chú giải (RSA/Rabin)
+                    labels: {
+                        color: '#000000', // Chữ đen/xám đậm
+                        font: {
+                            weight: 'bold',
+                            family: "'Inter', sans-serif"
+                        }
+                    }
+                }
             },
             scales: {
                 y: {
-                    title: { display: true, text: 'Thời gian (mili-giây)' },
-                    grid: { color: GRID_COLOR },
-                    beginAtZero: true
+                    title: { 
+                        display: true, 
+                        text: 'Thời gian (mili-giây)',
+                        // THÊM: Chỉnh màu chữ tiêu đề trục Y
+                        color: '#000000',
+                        font: { weight: 'bold' }
+                    },
+                    // Đổi lưới thành xám nhạt thay vì biến GRID_COLOR cũ (thường là màu tối)
+                    grid: { color: '#e5e7eb' }, 
+                    beginAtZero: true,
+                    ticks: {
+                        // THÊM: Chỉnh màu các con số trên trục Y
+                        color: '#000000', 
+                        font: { family: "'Fira Code', monospace" , weight: 'bold'}
+                    }
                 },
                 x: {
                     grid: { display: false },
-                    ticks: { maxTicksLimit: 10 } // Không hiển thị quá nhiều nhãn trục X
+                    ticks: { 
+                        maxTicksLimit: 10,
+                        // THÊM: Chỉnh màu các nhãn (Pkt 1, Pkt 2...) trên trục X
+                        color: '#000000', 
+                        font: { weight: 'bold' }
+                    }
                 }
             }
         }
@@ -223,23 +275,51 @@ function renderVerifyChart(metrics) {
                 ],
                 borderColor: [RSA_COLOR, RABIN_COLOR],
                 borderWidth: 2,
-                borderRadius: 4
+                borderRadius: 4,
+                
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            color: TEXT_COLOR,
             plugins: {
-                legend: { display: false } // Ẩn legend vì chỉ có 1 thanh hiển thị tên dưới trục x rồi
+                tooltip: {
+                    enabled: true,
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    titleColor: '#000000',
+                    bodyColor: '#000000',
+                    borderColor: '#000000',
+                    borderWidth: 1,
+                    bodyFont: {
+                        family: "'Fira Code', monospace",
+                        size: 14,
+                        weight: 'bold'
+                    }
+                },
+                legend: { display: false }
             },
             scales: {
                 y: {
-                    title: { display: true, text: 'Tổng Thời gian (ms)' },
+                    title: {
+                        display: true,
+                        text: 'Tổng Thời gian (ms)',
+                        color: '#000000',
+                        font: { weight: 'bold' }
+                    },
                     grid: { color: GRID_COLOR },
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#000000',
+                        font: { family: "'Fira Code', monospace" , weight: 'bold'}
+                    }
                 },
                 x: {
-                    grid: { display: false }
+                    grid: { display: false },
+                    ticks: {
+                        color: '#000000',
+                        font: { family: "'Fira Code', monospace" , weight: 'bold'}
+                    }
                 }
             }
         }
