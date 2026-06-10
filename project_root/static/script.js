@@ -71,8 +71,8 @@ function updateDynamicTable(data) {
     }
 
     // --- TIÊU CHÍ 3: THỜI GIAN XÁC THỰC ---
-    document.getElementById('rsaVerifyCell').innerText = `~ ${verify.rsa_avg_ms.toFixed(3)} ms/gói (Độ phức tạp cao)`;
-    document.getElementById('rabinVerifyCell').innerText = `~ ${verify.rabin_avg_ms.toFixed(3)} ms/gói (Độ phức tạp thấp)`;
+    document.getElementById('rsaVerifyCell').innerText = `~ ${verify.rsa_avg_ms.toFixed(3)} ms`;
+    document.getElementById('rabinVerifyCell').innerText = `~ ${verify.rabin_avg_ms.toFixed(3)} ms`;
     const winnerVerify = document.getElementById('winnerVerifyCell');
     if (verify.rsa_avg_ms < verify.rabin_avg_ms) {
         winnerVerify.innerText = 'RSA'; winnerVerify.className = 'highlight-rsa';
@@ -83,12 +83,18 @@ function updateDynamicTable(data) {
     }
 
     // --- TIÊU CHÍ 4: NĂNG LƯỢNG IOT ---
+    // Giả lập mức tiêu thụ điện của một dòng chip vi điều khiển phổ thông (VD: 100 mW)
+    // Công thức: E (microJoules) = P (mW) * T (ms)
+    const power_mW = 100;
+    const rsaEnergy_uJ = (verify.rsa_avg_ms * power_mW).toFixed(2);
+    const rabinEnergy_uJ = (verify.rabin_avg_ms * power_mW).toFixed(2);
+
     let speedUp = "nhiều";
     if (verify.rabin_avg_ms > 0) {
         speedUp = (verify.rsa_avg_ms / verify.rabin_avg_ms).toFixed(1);
     }
-    document.getElementById('rsaEnergyCell').innerText = `Vi xử lý hoạt động lâu, tốn pin`;
-    document.getElementById('rabinEnergyCell').innerText = `Sleep mode nhanh hơn gấp ${speedUp} lần`;
+    document.getElementById('rsaEnergyCell').innerText = `~ ${rsaEnergy_uJ} µJ/gói`;
+    document.getElementById('rabinEnergyCell').innerText = `~ ${rabinEnergy_uJ} µJ/gói (Giảm x${speedUp} lần)`;
     
     const winnerEnergy = document.getElementById('winnerEnergyCell');
     // Năng lượng thắng dựa trên tốc độ xác thực
@@ -101,8 +107,8 @@ function updateDynamicTable(data) {
     }
 
     // --- TIÊU CHÍ 5: KÍCH THƯỚC CHỮ KÝ ---
-    document.getElementById('rsaSizeCell').innerText = `${storage.rsa_bytes} Bytes / gói`;
-    document.getElementById('rabinSizeCell').innerText = `${storage.rabin_bytes} Bytes (Gốc: ${storage.rsa_bytes}B + Salt: ${storage.salt_bytes}B)`;
+    document.getElementById('rsaSizeCell').innerText = `${storage.rsa_bytes} Bytes`;
+    document.getElementById('rabinSizeCell').innerText = `${storage.rabin_bytes} Bytes (Cơ sở: ${storage.rsa_bytes}B + Phụ trợ: ${storage.salt_bytes}B)`;
     const winnerSize = document.getElementById('winnerSizeCell');
     if (storage.rsa_bytes < storage.rabin_bytes) {
         winnerSize.innerText = 'RSA'; winnerSize.className = 'highlight-rsa';
