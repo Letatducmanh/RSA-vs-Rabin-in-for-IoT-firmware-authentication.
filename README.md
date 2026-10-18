@@ -12,7 +12,6 @@
 
 ```text
 code ck/
-├── PLAN.md
 ├── requirements.txt
 └── project_root/
     ├── main.py
