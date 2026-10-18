@@ -11,7 +11,6 @@
 ## Cấu trúc dự án
 
 ```text
-code ck/
 ├── requirements.txt
 └── project_root/
     ├── main.py
